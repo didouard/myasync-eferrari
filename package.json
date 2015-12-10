@@ -1,0 +1,22 @@
+{
+  "name": "myasync-eferrari",
+  "version": "1.0.0",
+  "description": "Fonctions et modèles communs pour le code asynchrone",
+  "main": "async.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/didouard/myasync-eferrari.git"
+  },
+  "keywords": [
+    "async"
+  ],
+  "author": "Edouard FERRARI",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/didouard/myasync-eferrari/issues"
+  },
+  "homepage": "https://github.com/didouard/myasync-eferrari#readme"
+}

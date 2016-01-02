@@ -1,6 +1,6 @@
 {
   "name": "myasync-eferrari",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fonctions et modèles communs pour le code asynchrone",
   "main": "async.js",
   "scripts": {

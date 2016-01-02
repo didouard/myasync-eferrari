@@ -24,18 +24,21 @@ describe('Async', function() {
     });
   });
   
-  it('map2', function (done) {
+  it('waterfall', function (done) {
     var f1 = function (callback) {
       return callback(null, 1);
     };
     
-    var f2 = function (callback) {
-      return callback(null, 2);
+    var f2 = function (data, callback) {
+      return callback(null, data + 2);
     };
     
-    async.parallel([f1, f2], function (errors, results) {
-      assert(results[0], 1);
-      assert(results[1], 2);
+    var f3 = function (data, callback) {
+      return callback(null, data * 2);
+    };
+    
+    async.waterfall([f1, f2, f3], function (errors, results) {
+      assert(results, 6);
       done();
     });
   });

@@ -24,21 +24,33 @@ var Async = function () {
     }
   };
   
-  this.parallel = function (jobs, callback) {
+  this.waterfall = function() {
+    var jobs = arguments[0];
     if (!(jobs instanceof Array)) return callback(new Error("First argument need to be an array containing function"));
 
-    var job = jobs.shift();
-    job(function (err, result) {
+    var callback = (arguments.length > 2) ? arguments[2] : arguments[1];
+    var after = function(err, result) {
       if (err) return callback(err);
-      
-      if (jobs.length < 1) return callback(null, [result]);
-      
-      self.parallel(jobs, function (err, data) {
+
+      var args = [];
+      if (jobs.length < 1) return callback(null, result);
+
+      args.push(jobs);
+      if (result) args.push(result);
+      args.push(function(err, data) {
         if (err) return callback(err);
-        data.push(result);
         callback(null, data);
       });
-    });
+      self.waterfall.apply(this, args);
+    };
+
+    var job = jobs.shift();
+
+    var args = [];
+    if (arguments.length > 2) args.push(arguments[1]);
+    args.push(after);
+
+    job.apply(this, args);
   };
   
 };

@@ -23,5 +23,21 @@ describe('Async', function() {
       done();
     });
   });
+  
+  it('map2', function (done) {
+    var f1 = function (callback) {
+      return callback(null, 1);
+    };
+    
+    var f2 = function (callback) {
+      return callback(null, 2);
+    };
+    
+    async.parallel([f1, f2], function (errors, results) {
+      assert(results[0], 1);
+      assert(results[1], 2);
+      done();
+    });
+  });
 });
 

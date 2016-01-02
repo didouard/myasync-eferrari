@@ -1,23 +1,6 @@
 
 var Async = function () {
-  this.map = function (array, func, callback) {
-    var results = [];
-    var errors = [];
-    var count = array.length;
-    
-    for (var i = array.length; i--; ) {
-      var object = array[i];
-      
-      (function(object, index) {
-        func(object, function (err, result) {
-          count--;
-          if (err) return errors[index] = err;
-          results[index] = result;
-          if (count < 1) return callback((errors.length > 0) ? errors : null, results);
-        });
-      })(object, i);
-    }
-  };
+  var self =this;
   
   this.map = function(items, iterate, callback) {
     var queue = [];
@@ -39,6 +22,23 @@ var Async = function () {
         });
       }) (item, i);
     }
+  };
+  
+  this.parallel = function (jobs, callback) {
+    if (!(jobs instanceof Array)) return callback(new Error("First argument need to be an array containing function"));
+
+    var job = jobs.shift();
+    job(function (err, result) {
+      if (err) return callback(err);
+      
+      if (jobs.length < 1) return callback(null, [result]);
+      
+      self.parallel(jobs, function (err, data) {
+        if (err) return callback(err);
+        data.push(result);
+        callback(null, data);
+      });
+    });
   };
   
 };

@@ -36,7 +36,7 @@ var Async = function () {
       if (jobs.length < 1) return callback(null, result);
 
       args.push(jobs);
-      if (result) args.push(result);
+      if (result != undefined) args.push(result);
       args.push(function(err, data) {
         if (err) return callback(err);
         callback(null, data);
